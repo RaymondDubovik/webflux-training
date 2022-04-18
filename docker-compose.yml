@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  json-server:
+    image: vimagick/json-server
+    command: -H 0.0.0.0 -p 3000 -w db.json --delay 10000
+    volumes:
+      - ./mount-jsonserver:/data
+    ports:
+      - '3000:3000'
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - '27017:27017'

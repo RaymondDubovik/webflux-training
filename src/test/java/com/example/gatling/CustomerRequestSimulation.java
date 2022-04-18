@@ -14,7 +14,7 @@ import static io.gatling.javaapi.http.HttpDsl.status;
 public class CustomerRequestSimulation extends Simulation {
 
     HttpProtocolBuilder httpProtocol = http
-            .baseUrl("http://localhost:8080")
+            .baseUrl("http://localhost:9000")
             .acceptHeader("application/json")
             .userAgentHeader("Gatling Performance Test");
 
@@ -25,7 +25,7 @@ public class CustomerRequestSimulation extends Simulation {
                  );
 
     public CustomerRequestSimulation() {
-        this.setUp(scn.injectOpen(constantUsersPerSec(50).during(Duration.ofSeconds(15))))
+        this.setUp(scn.injectOpen(constantUsersPerSec(50).during(Duration.ofSeconds(10))))
                 .protocols(httpProtocol);
     }
 }

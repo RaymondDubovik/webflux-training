@@ -11,21 +11,22 @@ import static io.gatling.javaapi.core.CoreDsl.scenario;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
-public class CustomerRequestSimulation extends Simulation {
+public class GatlingSimulation extends Simulation {
 
-    HttpProtocolBuilder httpProtocol = http
+    HttpProtocolBuilder protocol = http
             .baseUrl("http://localhost:9000")
             .acceptHeader("application/json")
-            .userAgentHeader("Gatling Performance Test");
+            .userAgentHeader("Gatling Load Test");
 
-    ScenarioBuilder scn = scenario("Load Test Getting List")
+    ScenarioBuilder scenario = scenario("Load Test Getting List")
             .exec(http("get-customer-request")
                           .get("/")
                           .check(status().is(200))
                  );
 
-    public CustomerRequestSimulation() {
-        this.setUp(scn.injectOpen(constantUsersPerSec(50).during(Duration.ofSeconds(10))))
-                .protocols(httpProtocol);
+    public GatlingSimulation() {
+        setUp(scenario.injectOpen(constantUsersPerSec(100)
+                      .during(Duration.ofSeconds(10))))
+                .protocols(protocol);
     }
 }

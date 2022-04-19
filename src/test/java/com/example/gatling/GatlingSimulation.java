@@ -9,6 +9,7 @@ import io.gatling.javaapi.http.HttpProtocolBuilder;
 import static io.gatling.javaapi.core.CoreDsl.constantUsersPerSec;
 import static io.gatling.javaapi.core.CoreDsl.rampUsersPerSec;
 import static io.gatling.javaapi.core.CoreDsl.scenario;
+import static io.gatling.javaapi.core.CoreDsl.stressPeakUsers;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
@@ -27,8 +28,9 @@ public class GatlingSimulation extends Simulation {
 
     public GatlingSimulation() {
         setUp(scenario.injectOpen(
-                rampUsersPerSec(100).to(1000).during(Duration.ofSeconds(10))
+                rampUsersPerSec(100).to(1000).during(Duration.ofSeconds(10)),
+                constantUsersPerSec(1000).during(Duration.ofSeconds(10))
              ))
-                .protocols(protocol);
+             .protocols(protocol);
     }
 }

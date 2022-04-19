@@ -22,8 +22,9 @@ public class Controller {
 
         // It is important to execute the networking code on a separate thread, so that the HTTP thread is freed
         // Fixed thread pool used for simplicity, it is not a good solution for ever-changing incoming http request count
-        ExecutorService executorService = Executors.newFixedThreadPool(25);
-        executorService.submit(() -> service.longApiRequest(deferredResult));
+//        ExecutorService executorService = Executors.newFixedThreadPool(25);
+//        executorService.submit(() -> service.longApiRequest(deferredResult));
+        new Thread(() -> service.longApiRequest(deferredResult)).start();
         
         return deferredResult;
     }

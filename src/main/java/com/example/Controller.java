@@ -1,9 +1,5 @@
 package com.example;
 
-import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Stream;
-
 import com.example.mongo.Lecturer;
 import com.example.mongo.LecturerRepository;
 import com.example.mongo.University;

@@ -1,13 +1,13 @@
 package com.example;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
 import com.example.networking.ApiResponse;
 import com.example.networking.LongApi;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.context.request.async.DeferredResult;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -24,7 +24,12 @@ public class Service {
                 .create(LongApi.class);
     }
 
-    public ApiResponse longApiRequest() throws IOException {
-        return api.longCall().execute().body(); // simplified, non-production ready networking code
+    public void longApiRequest(DeferredResult<String> deferredResult) {
+        try {
+            ApiResponse response = api.longCall().execute().body();
+            deferredResult.setResult(response.getMessage());
+        } catch (IOException e) {
+            deferredResult.setErrorResult("Some error object");
+        }
     }
 }
